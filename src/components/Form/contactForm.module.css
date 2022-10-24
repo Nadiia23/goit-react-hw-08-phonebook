@@ -1,0 +1,43 @@
+
+.form {
+    padding: 15px;
+    text-align: center;
+    border: 3px solid black
+}
+
+.input {
+    padding: 5px 5px;
+    margin-right: 15px;
+    font-size: 16px;
+    line-height: 1.1;
+    border: 2px solid rgb(115, 102, 83);
+}
+
+.label {
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.btnAdd {
+    display: block;
+        margin: 15px auto 0;
+        padding: 5px 15px;
+        height: 50px;
+            width: fit-content;
+        font-weight: 600;
+        border-radius: 4px;
+        background-color: rgb(250, 215, 172);
+        border: 2px solid #f4b76d;
+}
+
+
+.contactsTitle {
+    font-size: 35px;
+}
+
+
+.container {
+    margin-top: 50px;
+    width: 100%;
+    text-align: center;
+}
