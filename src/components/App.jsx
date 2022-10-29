@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Phonebook } from './Form/ContactForm';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
@@ -6,88 +6,77 @@ import { Filter } from './Filter/Filter';
 
 const CONTACTS_LIST_LOCAL_KEY = 'contacts';
 
+export const App = () => {
+  const [contacts, setContacts] = useState(() => {
+    const changeContacts = localStorage.getItem('contacts');
+    if (changeContacts) {
+      return JSON.parse(changeContacts);
+    } return []
+  });
 
-export class App extends Component {
-  state = {
-    contacts: [
-    {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-  ],
-    filter: '',
+  const [filter, setFilter] = useState('');
+
+  // useEffect(() => {
+  //   const localContacts = localStorage.getItem(CONTACTS_LIST_LOCAL_KEY);
+  //   const parsedContacts = JSON.parse(localContacts);
+  //   if (parsedContacts) {
+  //     setContacts(parsedContacts);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    localStorage.setItem(CONTACTS_LIST_LOCAL_KEY, JSON.stringify(contacts));
+  }, [contacts]);
+
+  const handleDeleteUser = id => {
+    setContacts(contacts => contacts.filter(item => item.id !== id));
   };
 
-
-
-  componentDidMount() {
-    const localContacts = localStorage.getItem(CONTACTS_LIST_LOCAL_KEY);
-    const parsedContacts = JSON.parse(localContacts);
-    if (parsedContacts) {
-      this.setState({contacts: parsedContacts})
-    }
-  }
-
-  componentDidUpdate(_, prevState) {
-    const contacts = this.state;
-    if (contacts !== prevState.contacts) {
-      localStorage.setItem(CONTACTS_LIST_LOCAL_KEY, JSON.stringify(this.state.contacts));
-    }
-  }
-
-
-
-  handleDeleteUser = id => {
-    this.setState(prevState => {
-      return { contacts: prevState.contacts.filter(item => item.id !== id) };
-    });
+  const getFilteredContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
   };
 
-   getFilteredContacts = event => {
-     this.setState({ filter: event.currentTarget.value.toLowerCase() });
+  const changeFilter = event => {
+    setFilter(event.target.value);
   };
 
-
-  handleSubmit = (name, number) => {
-    if (this.state.contacts.some(contact => contact.name === name)) {
+  const handleSubmit = (name, number) => {
+    if (contacts.some(contact => contact.name === name)) {
       return alert(`${name} is already in contacts`);
     }
-    this.setState(prevState => {
-      return {
-        contacts: [...prevState.contacts, { name, number, id: nanoid() }],
-      };
+    setContacts(prevContacts => {
+      return [...prevContacts, { name, number, id: nanoid() }];
     });
   };
 
+  // const visibleContacts = contacts.filter(({ name }) =>
+  //     name.toLowerCase().includes(filter)
+  //   );
 
-  render() {
-    const { contacts, filter } = this.state;
-    const visibleContacts = contacts.filter(({ name }) =>
-      name.toLowerCase().includes(filter)
-    );
-    
-    return (
-      <div style={{
+  return (
+    <div
+      style={{
         display: 'flex',
-        flexDirection:'column',
+        flexDirection: 'column',
         textAlign: 'center',
         alignItems: 'center',
         fontSize: 30,
-        color: '#010101'
-      }}>
-        <h1>Phonebook</h1>
-        <Phonebook
-           onSubmit={this.handleSubmit}
-        />
-        <h2>Contacts</h2>
-        <Filter value={filter} onChange={this.getFilteredContacts} />
-        
-        <ContactList
-          contacts={visibleContacts}
-          onDelete={this.handleDeleteUser} />
-      </div>
-    );
-  }
-}
+        color: '#010101',
+      }}
+    >
+      <h1>Phonebook</h1>
+      <Phonebook onSubmit={handleSubmit} />
+      <h2>Contacts</h2>
+      <Filter value={filter} onChange={changeFilter} />
+
+      <ContactList
+        contacts={getFilteredContacts()}
+        onDelete={handleDeleteUser}
+      />
+    </div>
+  );
+};
 
 export default App;
