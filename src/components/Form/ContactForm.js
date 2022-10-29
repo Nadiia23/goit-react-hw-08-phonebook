@@ -1,38 +1,46 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 import s from './contactForm.module.css';
 
-export class Phonebook extends Component {
+export const Phonebook = ({onSubmit}) => {
   
-  state = {
-    name: '',
-    number: '',
+  // state = {
+  //   name: '',
+  //   number: '',
+  // };
+
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+
+  const onChangeName = event => {
+    // const { name, value } = event.currentTarget;
+
+    // this.setState({
+    //   [name]: value,
+    // });
+    setName(event.currentTarget.value)
   };
 
-  onChangeName = event => {
-    const { name, value } = event.currentTarget;
+  const onChangeNumber = event => {
+    setNumber(event.currentTarget.value)
+  }
 
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    const {name, number} = this.state
-    this.props.onSubmit(name, number);
-    this.setState({ name: '', number: '' });
+    // const {name, number} = this.state
+    onSubmit(name, number);
+    // this.setState({ name: '', number: '' });
+    setName('');
+    setNumber('');
   };
 
-
-  render() {
-    const { name, number } = this.state;
     return (
-        <form className={s.form} onSubmit={this.handleSubmit}>
+        <form className={s.form} onSubmit={handleSubmit}>
           <label className={s.label} htmlFor="name">Name</label>
           <input className={s.input}
             value={name}
-            onChange={this.onChangeName}
+            onChange={onChangeName}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -43,7 +51,7 @@ export class Phonebook extends Component {
           <label className={s.label} htmlFor="input">Number</label>
           <input className={s.input}
             value={number}
-            onChange={this.onChangeName}
+            onChange={onChangeNumber}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -55,7 +63,6 @@ export class Phonebook extends Component {
         </form>
     );
   }
-}
 
 Phonebook.propTypes = {
   onSubmit: PropTypes.func.isRequired,
