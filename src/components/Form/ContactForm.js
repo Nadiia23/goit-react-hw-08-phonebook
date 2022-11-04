@@ -1,46 +1,37 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "redux/contactsSlice";
+import { getContacts } from 'redux/selector';
+// import { getContacts } from "redux/selectors";
 import s from './contactForm.module.css';
 
-export const Phonebook = ({onSubmit}) => {
-  
-  // state = {
-  //   name: '',
-  //   number: '',
-  // };
+const Phonebook = () => {
+   const dispatch = useDispatch();
+    const contacts = useSelector(getContacts);
+    const handleSubmit = event => {
+        event.preventDefault();       
 
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+        const form = event.target;
+        
+        const existingContact = contacts.find(contact =>
+            contact.name === form.elements.name.value
+        );
 
+        if (existingContact) {      
+            alert(`${form.elements.name.value} is already in contacts`)
+            form.reset();
+            return 
+        }
 
-  const onChangeName = event => {
-    // const { name, value } = event.currentTarget;
+        dispatch(addContact(form.elements.name.value, form.elements.number.value));
 
-    // this.setState({
-    //   [name]: value,
-    // });
-    setName(event.currentTarget.value)
-  };
-
-  const onChangeNumber = event => {
-    setNumber(event.currentTarget.value)
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    // const {name, number} = this.state
-    onSubmit(name, number);
-    // this.setState({ name: '', number: '' });
-    setName('');
-    setNumber('');
-  };
+        form.reset();
+    }
 
     return (
         <form className={s.form} onSubmit={handleSubmit}>
           <label className={s.label} htmlFor="name">Name</label>
           <input className={s.input}
-            value={name}
-            onChange={onChangeName}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -50,8 +41,6 @@ export const Phonebook = ({onSubmit}) => {
 
           <label className={s.label} htmlFor="input">Number</label>
           <input className={s.input}
-            value={number}
-            onChange={onChangeNumber}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -65,5 +54,7 @@ export const Phonebook = ({onSubmit}) => {
   }
 
 Phonebook.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
 };
+
+export default Phonebook;
