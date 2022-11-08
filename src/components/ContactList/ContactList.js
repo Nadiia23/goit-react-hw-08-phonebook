@@ -1,48 +1,32 @@
 import { useSelector } from "react-redux";
-import ContactListItem from './ContactListItem';
+import { selectVisibleContacts } from "../../redux/selector";
 import PropTypes from 'prop-types';
+import ContactListItem from "./ContactListItem";
 import s from './contactList.module.css';
-import { getContacts, getContactsFilter } from "redux/selector";
-
-
-
-const getVisibleContacts = (contacts, filteredContacts) => {
-    const normalizedFilter = filteredContacts.value?.toLowerCase() || '';
-
-    return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(normalizedFilter)          
-    ); 
-}
 
 const ContactList = () => {
-
-    const contacts = useSelector(getContacts);
-    const filteredContacts = useSelector(getContactsFilter);
-    const visibleContacts = getVisibleContacts(contacts, filteredContacts)
+    const visibleContacts = useSelector(selectVisibleContacts);
 
     return (
-      
-    <ul className={s.contactsList}>
-      {visibleContacts.map(({ name, number, id }) => (
-        <ContactListItem
-          key={id}
-          name={name}
-          number={number}
-              id={id}
-        />
-      ))}
-    </ul>
-  );
-};
+        <ul className={s.contactsList}>
+            {visibleContacts.map(contact => {
+                return (
+                    <ContactListItem
+                        contact={contact}
+                        key={contact.id}
+                    />
+                )
+             })}
+        </ul>
+    )
+}
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
+    contact: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
     })
-  )
-};
+}
 
 export default ContactList;
