@@ -9,7 +9,7 @@ const ContactList = () => {
 
   return (
     <ul className={s.contactsList}>
-      {visibleContacts.map(contact => {
+      {[...visibleContacts].reverse().map(contact => {
         return <ContactListItem contact={contact} key={contact.id} />;
       })}
     </ul>
