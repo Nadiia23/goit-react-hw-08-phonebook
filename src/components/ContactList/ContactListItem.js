@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { deleteContact } from 'redux/contactsOperations';
 import s from './contactList.module.css';
 
@@ -12,9 +12,9 @@ const ContactListItem = ({ contact }) => {
       <a className={s.contactsNumber} href={'tell:' + contact.phone}>
         {contact.phone}
       </a>
-      <button className={s.btnDelete} type="button" onClick={handleDelete}>
-        Delete
-      </button>
+     <button className={s.btnDelete} type="button" onClick={handleDelete}>
+          Delete
+        </button>
     </li>
   );
 };
