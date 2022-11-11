@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Nadiia23/goit-react-hw-08-phonebook.git/static/css/main.38a5f2d8.css",
+    "main.js": "/Nadiia23/goit-react-hw-08-phonebook.git/static/js/main.4d27972d.js",
+    "index.html": "/Nadiia23/goit-react-hw-08-phonebook.git/index.html",
+    "main.38a5f2d8.css.map": "/Nadiia23/goit-react-hw-08-phonebook.git/static/css/main.38a5f2d8.css.map",
+    "main.4d27972d.js.map": "/Nadiia23/goit-react-hw-08-phonebook.git/static/js/main.4d27972d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.38a5f2d8.css",
+    "static/js/main.4d27972d.js"
+  ]
+}
