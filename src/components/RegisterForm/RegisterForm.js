@@ -1,8 +1,12 @@
+// import { useState } from "react";
 import { useDispatch } from "react-redux"
-import { register } from "redux/Auth/operations";
+import { register } from "redux/Auth/authThunk";
+import s from './registerForm.module.css'
 
 export const RegisterForm = () => {
+
     const dispatch = useDispatch();
+
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -18,20 +22,31 @@ export const RegisterForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
+        <div className={s.card}>
+            <h2 className={s.cardHeading}>
+				Register
+			</h2>
+            <form className={s.cardForm} onSubmit={handleSubmit}>
+                <div className={s.input}>
+                    <label className={s.inputLabel}>
                 Username
-                <input type='text' name='name' />
+                <input className={s.inputField} type='text' name='name' required/>
             </label>
-            <label>
+            </div>
+                <div className={s.input}>
+                    <label className={s.inputLabel}>
                 Email
-                <input type='email' name='email' />
+                <input className={s.inputField} type='text' name='email' required/>
             </label>
-            <label>
+            </div>
+                <div className={s.input}>
+                    <label className={s.inputLabel}>
                 Password
-                <input type='password' name='password' />
+                <input className={s.inputField} type='password' name='password' required/>
             </label>
-            <button type='submit'>Register</button>
+            </div>
+            <button className={s.actionButton} type='submit'>Register</button>
         </form>
+        </div>
     );
 };

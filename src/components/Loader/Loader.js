@@ -1,9 +1,9 @@
 import { TailSpin } from "react-loader-spinner";
-import css from './Loader.module.css'
+import s from './loader.module.css'
 
 const Loader = () => {
     return (
-        <div className={css.loaderThumb}>
+        <div className={s.loaderThumb}>
             <TailSpin
                 height="80"
                 width="80"

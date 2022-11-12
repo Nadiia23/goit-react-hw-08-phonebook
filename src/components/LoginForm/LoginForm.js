@@ -1,7 +1,8 @@
-import { useDispatch } from "react-redux"
-import { logIn } from "redux/Auth/operations";
+import { useDispatch } from "react-redux";
+import { logIn } from "redux/Auth/authThunk";
+import s from './loginForm.module.css';
 
-export const LoginForm = () => {
+const LoginForm = () => {
     const dispatch = useDispatch();
 
     const handleSubmit = e => {
@@ -13,19 +14,26 @@ export const LoginForm = () => {
                 password: form.elements.password.value,
             })
         );
-        form.reset();
     };
+
     return (
-        <form onSubmit={handleSubmit} autoComplete='off'>
-            <label>
+        <div className={s.card}>
+            <form className={s.cardForm} onSubmit={handleSubmit} autoComplete='off'>
+                <div className={s.input}>
+                    <label className={s.inputLabel}>
                 Email
-                <input type='email' name='email' />
+                <input className={s.inputField} type='email' name='email' />
             </label>
-            <label>
+            </div>
+                <div className={s.input}>
+                    <label className={s.inputLabel}>
                 Password
-                <input type='password' name='password' />
-                <button type='submit'>Log in</button>
-            </label>
+                <input className={s.inputField} type='password' name='password' />
+                </label>
+            </div>
+                    <button className={s.actionButton} type='submit'>Log In</button>
         </form>
+        </div>
     );
 };
+export default LoginForm;

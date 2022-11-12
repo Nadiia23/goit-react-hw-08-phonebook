@@ -1,0 +1,63 @@
+.card {
+    margin: 50px auto 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 425px;
+    background-color: #89ccf0;
+    border-radius: 10px;
+    padding: 0.75rem;
+    padding-top: 0;
+}
+
+.cardHeading {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #f8f1e5;
+    line-height: 1.222;
+}
+
+.cardForm {
+    padding: 2rem 1rem 0;
+    background-color: #f8f1e5;
+    border-radius: 10px;
+}
+
+.input {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-top: 1.5rem;
+    border-bottom: 2px solid #426e86;
+    
+}
+
+.inputField {
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    padding-left: 5px;
+    border: 0;
+    background-color: transparent;
+    color: #2f3131;
+}
+
+.actionButton {
+    font-size: 1.25rem;
+    padding: 1em;
+    width: 100%;
+    font-weight: 500;
+    background-color: #89ccf0;
+    border-radius: 6px;
+    color: #f8f1e5;
+    border: 0;
+    margin-bottom: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.actionButton:focus,
+.actionButton:hover {
+    color: #0f5377;
+    background-color: #f1c0ec;
+}

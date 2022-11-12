@@ -12,15 +12,7 @@ const Filter = () => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 20,
-        textAlign: 'center',
-        alignItems: 'center',
-        fontSize: 30,
-      }}
-    >
+    <form className={s.filterCard}>
       <label className={s.labelTitle} htmlFor="filter">
         Find contacts by name
         <input
@@ -30,7 +22,7 @@ const Filter = () => {
           onChange={getFilteredContacts}
         />
       </label>
-    </div>
+    </form>
   );
 };
 

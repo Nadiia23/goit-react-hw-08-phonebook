@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 const setAuthHeader = token => {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -12,13 +12,18 @@ const clearAuthHeader = () => {
 }
 
 export const register = createAsyncThunk(
-    'auth/refister',
+    'auth/register',
     async (credentials, thunkApi) => {
         try {
-            const { data } = await axios.post('/user/sigup', credentials);
+            const { data } = await axios.post('/users/signup', credentials);
             setAuthHeader(data.token);
             return data;
         } catch (error) {
+             if (error.response.status === 400) {
+                alert(
+                    'This email address is already being used. Please, log in or try another email.'
+                )
+            }
             return thunkApi.rejectWithValue(error.message)
         }
     }
@@ -28,16 +33,23 @@ export const logIn = createAsyncThunk(
     'auth/login',
     async (credentials, thunkAPI) => {
         try {
-            const { data } = await axios.post('/user/login', credentials);
+            const { data } = await axios.post('/users/login', credentials);
             setAuthHeader(data.token);
             return data;
         } catch (error) {
+            if (error.response.status === 400) {
+                alert(
+                    'This email address is already being used or you entered the wrong password. Please, check the correctness of entered information.'
+                )
+            }
             return thunkAPI.rejectWithValue(error.message);
         }
     }
 );
 
-export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+export const logOut = createAsyncThunk(
+    'auth/logOut',
+    async (_, thunkAPI) => {
     try {
         await axios.post('/users/logout');
         clearAuthHeader();

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { contactsAPI } from 'helpers/API';
+import axios from 'axios';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
   async (_, thunkAPI) => {
     try {
-      const { data } = await contactsAPI.get('/contacts/contacts');
+      const { data } = await axios.get('/contacts');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
@@ -17,7 +17,7 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
     try {
-      const { data } = await contactsAPI.post('/contacts/contacts', contact);
+      const { data } = await axios.post('/contacts', contact);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
@@ -29,10 +29,22 @@ export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (id, thunkAPI) => {
     try {
-      const { data } = await contactsAPI.delete(`/contacts/contacts/${id}`);
+      const { data } = await axios.delete(`/contacts/${id}`);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
+    }
+  }
+);
+
+export const editContact = createAsyncThunk(
+  "contacts/editContact",
+  async ({ id, name, number }, thunkAPI) => {
+    try {
+      const { data } = await axios.patch(`/contacts/${id}`, { name, number })
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.massage)
     }
   }
 );
