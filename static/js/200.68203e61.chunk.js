@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_homework_template=self.webpackChunkreact_homework_template||[]).push([[200],{200:function(e,t,a){a.r(t),a.d(t,{default:function(){return c}});var r="homePage_title__FzVmN",n=a(329);function c(){return(0,n.jsx)("div",{className:r,children:(0,n.jsxs)("h1",{children:["Task manager welcome page"," "]})})}}}]);
+//# sourceMappingURL=200.68203e61.chunk.js.map
